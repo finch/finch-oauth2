@@ -8,7 +8,7 @@ libraryDependencies ++= Seq(
 )
 ```
 
-There is usage examples in [finch documentation](finch-oauth-cookbook).
+There are usage examples in [finch documentation](finch-oauth-cookbook).
 
 [finagle-oauth2]: https://github.com/finagle/finagle-oauth2
 [finch-oauth-cookbook]: http://finagle.github.io/finch/cookbook.html#oauth2
