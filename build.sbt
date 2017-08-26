@@ -7,6 +7,7 @@ lazy val buildSettings = Seq(
 
 lazy val finchVersion = "0.15.0"
 lazy val finagleOAuth2Version = "0.6.45"
+lazy val circeVersion = "0.8.0"
 
 lazy val compilerOptions = Seq(
   "-deprecation",
@@ -24,6 +25,7 @@ lazy val compilerOptions = Seq(
 )
 
 val testDependencies = Seq(
+  "org.mockito" % "mockito-all" % "1.10.19",
   "org.scalacheck" %% "scalacheck" % "1.13.5",
   "org.scalatest" %% "scalatest" % "3.0.3"
 )
@@ -31,9 +33,7 @@ val testDependencies = Seq(
 val baseSettings = Seq(
   libraryDependencies ++= Seq(
     "com.github.finagle" %% "finch-core" % finchVersion,
-    "com.github.finagle" %% "finagle-oauth2" % finagleOAuth2Version,
-    "commons-codec" % "commons-codec" % "1.10",
-    "org.mockito" % "mockito-all" % "1.10.19" % "test"
+    "com.github.finagle" %% "finagle-oauth2" % finagleOAuth2Version
   ) ++ testDependencies.map(_ % "test"),
   resolvers ++= Seq(
     Resolver.sonatypeRepo("releases"),
@@ -88,6 +88,30 @@ lazy val publishSettings = Seq(
 
 lazy val allSettings = baseSettings ++ buildSettings ++ publishSettings
 
-lazy val oauth2 = (project in file("."))
+lazy val noPublish = Seq(
+  publish := {},
+  publishLocal := {},
+  publishArtifact := false
+)
+
+lazy val root = project.in(file("."))
+  .settings(allSettings)
+  .settings(noPublish)
+  .aggregate(oauth2, examples)
+
+lazy val oauth2 = project
   .settings(moduleName := "finch-oauth2")
   .settings(allSettings)
+
+lazy val examples = project
+  .settings(moduleName := "finch-oauth2-examples")
+  .settings(allSettings)
+  .settings(noPublish)
+  .settings(resolvers += "TM" at "http://maven.twttr.com")
+  .settings(
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-generic" % circeVersion,
+      "com.github.finagle" %% "finch-circe" % finchVersion
+    )
+  )
+  .dependsOn(oauth2)
