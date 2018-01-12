@@ -1,12 +1,13 @@
+lazy val finchVersion = "0.16.1"
+
 lazy val buildSettings = Seq(
   organization := "com.github.finagle",
-  version := "0.16.0",
+  version := finchVersion,
   scalaVersion := "2.12.4",
   crossScalaVersions := Seq("2.11.12", "2.12.4")
 )
 
-lazy val finchVersion = "0.16.0"
-lazy val finagleOAuth2Version = "0.6.45"
+lazy val finagleOAuth2Version = "17.12.0"
 lazy val circeVersion = "0.9.0"
 
 lazy val compilerOptions = Seq(
