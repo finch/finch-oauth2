@@ -1,13 +1,14 @@
+lazy val finchVersion = "0.16.1"
+
 lazy val buildSettings = Seq(
   organization := "com.github.finagle",
-  version := "0.1.0",
-  scalaVersion := "2.12.2",
-  crossScalaVersions := Seq("2.11.11", "2.12.2")
+  version := finchVersion,
+  scalaVersion := "2.12.4",
+  crossScalaVersions := Seq("2.11.12", "2.12.4")
 )
 
-lazy val finchVersion = "0.15.0"
-lazy val finagleOAuth2Version = "0.6.45"
-lazy val circeVersion = "0.8.0"
+lazy val finagleOAuth2Version = "17.12.0"
+lazy val circeVersion = "0.9.0"
 
 lazy val compilerOptions = Seq(
   "-deprecation",
@@ -27,7 +28,7 @@ lazy val compilerOptions = Seq(
 val testDependencies = Seq(
   "org.mockito" % "mockito-all" % "1.10.19",
   "org.scalacheck" %% "scalacheck" % "1.13.5",
-  "org.scalatest" %% "scalatest" % "3.0.3"
+  "org.scalatest" %% "scalatest" % "3.0.4"
 )
 
 val baseSettings = Seq(
@@ -52,7 +53,7 @@ lazy val publishSettings = Seq(
     if (isSnapshot.value)
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
   },
   publishArtifact in Test := false,
   licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
@@ -82,7 +83,11 @@ lazy val publishSettings = Seq(
         <name>Ryan Plessner</name>
         <url>https://twitter.com/ryan_plessner</url>
       </developer>
-
+      <developer>
+        <id>ImLiar</id>
+        <name>Sergey Kolbasov</name>
+        <url>https://twitter.com/sergey_kolbasov</url>
+      </developer>
     </developers>
 )
 
