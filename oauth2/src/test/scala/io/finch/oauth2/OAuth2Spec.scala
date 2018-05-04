@@ -4,6 +4,7 @@ import com.twitter.finagle.http.Status
 import com.twitter.finagle.oauth2._
 import com.twitter.util.Future
 import io.finch._
+import io.finch.syntax._
 import org.mockito.Mockito._
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.mockito.MockitoSugar

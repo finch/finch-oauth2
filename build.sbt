@@ -1,4 +1,4 @@
-lazy val finchVersion = "0.16.1"
+lazy val finchVersion = "0.19.0"
 
 lazy val buildSettings = Seq(
   organization := "com.github.finagle",
@@ -7,8 +7,8 @@ lazy val buildSettings = Seq(
   crossScalaVersions := Seq("2.11.12", "2.12.4")
 )
 
-lazy val finagleOAuth2Version = "17.12.0"
-lazy val circeVersion = "0.9.0"
+lazy val finagleOAuth2Version = "18.4.0"
+lazy val circeVersion = "0.9.3"
 
 lazy val compilerOptions = Seq(
   "-deprecation",

@@ -6,6 +6,7 @@ import com.twitter.util.Await
 import io.circe.generic.auto._
 import io.finch._
 import io.finch.circe._
+import io.finch.syntax._
 
 /**
   * A simple example of finch-oauth2 usage
