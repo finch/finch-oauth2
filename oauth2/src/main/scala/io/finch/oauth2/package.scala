@@ -30,7 +30,7 @@ package object oauth2 {
           .handle(handleOAuthError)
 
       final def apply(input: Input): Endpoint.Result[AuthInfo[U]] =
-        EndpointResult.Matched(input, Rerunnable.fromFuture(aux(input)))
+        EndpointResult.Matched(input, Trace.empty, Rerunnable.fromFuture(aux(input)))
     }
 
   /**
@@ -46,6 +46,6 @@ package object oauth2 {
           .handle(handleOAuthError)
 
       final def apply(input: Input): Endpoint.Result[GrantHandlerResult] =
-        EndpointResult.Matched(input, Rerunnable.fromFuture(aux(input)))
+        EndpointResult.Matched(input, Trace.empty, Rerunnable.fromFuture(aux(input)))
     }
 }
