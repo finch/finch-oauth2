@@ -2,7 +2,7 @@ package io.finch
 
 import com.twitter.finagle.OAuth2
 import com.twitter.finagle.http.Status
-import com.twitter.finagle.oauth2.{AuthInfo, DataHandler, GrantHandlerResult, OAuthError}
+import com.twitter.finagle.oauth2.{AuthInfo, DataHandler, GrantResult, OAuthError}
 import com.twitter.util.Future
 import io.catbird.util.Rerunnable
 
@@ -37,15 +37,15 @@ package object oauth2 {
    * An [[Endpoint]] that takes a request (with user credentials) and issues an access token for it
    * with respect to a given `dataHandler`.
    */
-  def issueAccessToken[U](dataHandler: DataHandler[U]): Endpoint[GrantHandlerResult] =
-    new Endpoint[GrantHandlerResult] {
-      private[this] final def aux(i: Input): Future[Output[GrantHandlerResult]] =
+  def issueAccessToken[U](dataHandler: DataHandler[U]): Endpoint[GrantResult] =
+    new Endpoint[GrantResult] {
+      private[this] final def aux(i: Input): Future[Output[GrantResult]] =
         OAuth2
           .issueAccessToken(i.request, dataHandler)
           .map(ghr => Output.payload(ghr))
           .handle(handleOAuthError)
 
-      final def apply(input: Input): Endpoint.Result[GrantHandlerResult] =
+      final def apply(input: Input): Endpoint.Result[GrantResult] =
         EndpointResult.Matched(input, Trace.empty, Rerunnable.fromFuture(aux(input)))
     }
 }
