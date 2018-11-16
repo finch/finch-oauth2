@@ -1,7 +1,7 @@
 package io.finch.oauth2
 
 import com.twitter.finagle._
-import com.twitter.finagle.oauth2.{AuthInfo, GrantHandlerResult}
+import com.twitter.finagle.oauth2.{AuthInfo, GrantResult}
 import com.twitter.util.Await
 import io.circe.generic.auto._
 import io.finch._
@@ -44,7 +44,7 @@ object Main extends App {
     ai: AuthInfo[OAuthUser] => Ok(ai.user)
   }
 
-  def tokens: Endpoint[GrantHandlerResult] =
+  def tokens: Endpoint[GrantResult] =
     post("users" :: "auth" :: issueAccessToken(InMemoryDataHandler))
 
   def unprotected: Endpoint[UnprotectedUser] = get("users" :: "unprotected") {

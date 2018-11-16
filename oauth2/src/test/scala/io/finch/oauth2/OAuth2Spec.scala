@@ -15,14 +15,13 @@ class OAuth2Spec extends FlatSpec with Matchers with Checkers with MockitoSugar 
   behavior of "OAuth2"
 
   it should "authorize the requests" in {
-    val at: AccessToken = mock[AccessToken]
+    val at: AccessToken = AccessToken("foo", None, None, None, null)
     val dh: DataHandler[Int] = mock[DataHandler[Int]]
-    val ai: AuthInfo[Int] = mock[AuthInfo[Int]]
+    val ai: AuthInfo[Int] = new AuthInfo(42, "foo", None, None)
 
     when(dh.findAccessToken("bar")).thenReturn(Future.value(Some(at)))
     when(dh.isAccessTokenExpired(at)).thenReturn(false)
     when(dh.findAuthInfoByAccessToken(at)).thenReturn(Future.value(Some(ai)))
-    when(ai.user).thenReturn(42)
 
     val authInfo: Endpoint[AuthInfo[Int]] = authorize(dh)
     val e: Endpoint[Int] = get("user" :: authInfo) { ai: AuthInfo[Int] =>
@@ -40,16 +39,15 @@ class OAuth2Spec extends FlatSpec with Matchers with Checkers with MockitoSugar 
 
   it should "issue the access token" in {
     val dh: DataHandler[Int] = mock[DataHandler[Int]]
-    val at: AccessToken = mock[AccessToken]
+    val at: AccessToken = AccessToken("foobar", None, None, None, null)
 
-    when(at.token).thenReturn("foobar")
     when(dh.validateClient("id", "", "password")).thenReturn(Future.value(true))
     when(dh.findUser("u", "p")).thenReturn(Future.value(Some(42)))
     when(dh.getStoredAccessToken(AuthInfo(42, "id", None, None))).thenReturn(Future.value(Some(at)))
     when(dh.isAccessTokenExpired(at)).thenReturn(false)
 
-    val grandHandlerResult: Endpoint[GrantHandlerResult] = issueAccessToken(dh)
-    val e: Endpoint[String] = get("token" :: grandHandlerResult) { ghr: GrantHandlerResult =>
+    val grandHandlerResult: Endpoint[GrantResult] = issueAccessToken(dh)
+    val e: Endpoint[String] = get("token" :: grandHandlerResult) { ghr: GrantResult =>
       Ok(ghr.accessToken)
     }
 
