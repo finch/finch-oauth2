@@ -1,12 +1,13 @@
 package io.finch.oauth2
 
+import cats.effect.IO
 import com.twitter.finagle._
 import com.twitter.finagle.oauth2.{AuthInfo, GrantResult}
 import com.twitter.util.Await
 import io.circe.generic.auto._
 import io.finch._
+import io.finch.catsEffect._
 import io.finch.circe._
-import io.finch.syntax._
 
 /**
   * A simple example of finch-oauth2 usage
@@ -40,16 +41,21 @@ object Main extends App {
 
   case class UnprotectedUser(name: String)
 
-  def users: Endpoint[OAuthUser] = get("users" :: "current" :: authorize(InMemoryDataHandler)) {
+  def authInfo: Endpoint[IO, AuthInfo[OAuthUser]] = authorize[IO, OAuthUser](InMemoryDataHandler)
+  def accessToken: Endpoint[IO, GrantResult] = issueAccessToken[IO, OAuthUser](InMemoryDataHandler)
+
+  def users: Endpoint[IO, OAuthUser] = get("users" :: "current" :: authInfo) {
     ai: AuthInfo[OAuthUser] => Ok(ai.user)
   }
 
-  def tokens: Endpoint[GrantResult] =
-    post("users" :: "auth" :: issueAccessToken(InMemoryDataHandler))
+  def tokens: Endpoint[IO, GrantResult] = post("users" :: "auth" :: accessToken)
 
-  def unprotected: Endpoint[UnprotectedUser] = get("users" :: "unprotected") {
+  def unprotected: Endpoint[IO, UnprotectedUser] = get("users" :: "unprotected") {
     Ok(UnprotectedUser("unprotected"))
   }
 
-  Await.ready(Http.server.serve(":8081", (tokens :+: users :+: unprotected).toServiceAs[Application.Json]))
+  Await.ready(
+    Http.server
+      .serve(":8081", (tokens :+: users :+: unprotected).toServiceAs[Application.Json])
+  )
 }

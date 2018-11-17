@@ -33,7 +33,7 @@ val testDependencies = Seq(
 
 val baseSettings = Seq(
   libraryDependencies ++= Seq(
-    "com.github.finagle" %% "finch-core" % finchVersion,
+    "com.github.finagle" %% "finchx-core" % finchVersion,
     "com.github.finagle" %% "finagle-oauth2" % finagleOAuth2Version
   ) ++ testDependencies.map(_ % "test"),
   resolvers ++= Seq(

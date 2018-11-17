@@ -1,10 +1,11 @@
 package io.finch.oauth2
 
+import cats.effect.IO
 import com.twitter.finagle.http.Status
 import com.twitter.finagle.oauth2._
 import com.twitter.util.Future
 import io.finch._
-import io.finch.syntax._
+import io.finch.catsEffect._
 import org.mockito.Mockito._
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.mockito.MockitoSugar
@@ -23,8 +24,8 @@ class OAuth2Spec extends FlatSpec with Matchers with Checkers with MockitoSugar 
     when(dh.isAccessTokenExpired(at)).thenReturn(false)
     when(dh.findAuthInfoByAccessToken(at)).thenReturn(Future.value(Some(ai)))
 
-    val authInfo: Endpoint[AuthInfo[Int]] = authorize(dh)
-    val e: Endpoint[Int] = get("user" :: authInfo) { ai: AuthInfo[Int] =>
+    val authInfo: Endpoint[IO, AuthInfo[Int]] = authorize(dh)
+    val e: Endpoint[IO, Int] = get("user" :: authInfo) { ai: AuthInfo[Int] =>
       Ok(ai.user)
     }
 
@@ -46,8 +47,8 @@ class OAuth2Spec extends FlatSpec with Matchers with Checkers with MockitoSugar 
     when(dh.getStoredAccessToken(AuthInfo(42, "id", None, None))).thenReturn(Future.value(Some(at)))
     when(dh.isAccessTokenExpired(at)).thenReturn(false)
 
-    val grandHandlerResult: Endpoint[GrantResult] = issueAccessToken(dh)
-    val e: Endpoint[String] = get("token" :: grandHandlerResult) { ghr: GrantResult =>
+    val grandHandlerResult: Endpoint[IO, GrantResult] = issueAccessToken(dh)
+    val e: Endpoint[IO, String] = get("token" :: grandHandlerResult) { ghr: GrantResult =>
       Ok(ghr.accessToken)
     }
 
