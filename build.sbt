@@ -1,8 +1,9 @@
+import ReleaseTransformations._
+
 lazy val finchVersion = "0.25.0"
 
 lazy val buildSettings = Seq(
   organization := "com.github.finagle",
-  version := finchVersion,
   scalaVersion := "2.12.7",
   crossScalaVersions := Seq("2.11.12", "2.12.7")
 )
@@ -65,10 +66,27 @@ lazy val publishSettings = Seq(
   apiURL := Some(url("https://finagle.github.io/finch/docs/")),
   scmInfo := Some(
     ScmInfo(
-      url("https://github.com/finagle/finch"),
-      "scm:git:git@github.com:finagle/finch.git"
+      url("https://github.com/finch/finch-oauth2"),
+      "scm:git:git@github.com:finch/finch-oauth2.git"
     )
   ),
+  releaseVersionBump := sbtrelease.Version.Bump.Minor,
+  releaseProcess := {
+    Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      releaseStepCommandAndRemaining("+clean"),
+      releaseStepCommandAndRemaining("+test"),
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      releaseStepCommandAndRemaining("+publishSigned"),
+      setNextVersion,
+      commitNextVersion,
+      releaseStepCommand("sonatypeReleaseAll"),
+      pushChanges
+    )
+  },
   pomExtra :=
     <developers>
       <developer>
