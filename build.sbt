@@ -8,7 +8,7 @@ lazy val buildSettings = Seq(
   crossScalaVersions := Seq("2.11.12", "2.12.7")
 )
 
-lazy val finagleOAuth2Version = "18.10.0"
+lazy val finagleOAuth2Version = "18.11.0"
 lazy val circeVersion = "0.10.1"
 
 lazy val compilerOptions = Seq(
