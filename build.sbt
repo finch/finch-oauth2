@@ -126,11 +126,11 @@ lazy val root = project.in(file("."))
   .aggregate(oauth2, examples)
 
 lazy val oauth2 = project
-  .settings(moduleName := "finch-oauth2")
+  .settings(moduleName := "finchx-oauth2")
   .settings(allSettings)
 
 lazy val examples = project
-  .settings(moduleName := "finch-oauth2-examples")
+  .settings(moduleName := "finchx-oauth2-examples")
   .settings(allSettings)
   .settings(noPublish)
   .settings(resolvers += "TM" at "http://maven.twttr.com")
