@@ -1,8 +1,8 @@
-lazy val finchVersion = "0.26.1"
+lazy val finchVersion = "0.26.0"
 
 lazy val buildSettings = Seq(
   organization := "com.github.finagle",
-  version := finchVersion,
+  version := "0.26.1",
   scalaVersion := "2.12.7",
   crossScalaVersions := Seq("2.11.12", "2.12.7")
 )
