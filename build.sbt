@@ -1,6 +1,6 @@
 import ReleaseTransformations._
 
-lazy val finchVersion = "0.28.0"
+lazy val finchVersion = "0.31.0"
 
 lazy val buildSettings = Seq(
   organization := "com.github.finagle",
@@ -8,8 +8,8 @@ lazy val buildSettings = Seq(
   crossScalaVersions := Seq("2.11.12", "2.12.7")
 )
 
-lazy val finagleOAuth2Version = "19.2.0"
-lazy val circeVersion = "0.10.1"
+lazy val finagleOAuth2Version = "19.8.0"
+lazy val circeVersion = "0.11.1"
 
 lazy val compilerOptions = Seq(
   "-deprecation",
@@ -28,8 +28,8 @@ lazy val compilerOptions = Seq(
 
 val testDependencies = Seq(
   "org.mockito" % "mockito-all" % "1.10.19",
-  "org.scalacheck" %% "scalacheck" % "1.14.0",
-  "org.scalatest" %% "scalatest" % "3.0.5"
+  "org.scalacheck" %% "scalacheck" % "1.14.1",
+  "org.scalatest" %% "scalatest" % "3.0.8"
 )
 
 val baseSettings = Seq(
