@@ -9,7 +9,7 @@ lazy val buildSettings = Seq(
 )
 
 lazy val finagleOAuth2Version = "19.8.0"
-lazy val circeVersion = "0.11.1"
+lazy val circeVersion = "0.11.2"
 
 lazy val compilerOptions = Seq(
   "-deprecation",
