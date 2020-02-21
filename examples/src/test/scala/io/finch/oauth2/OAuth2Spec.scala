@@ -2,9 +2,10 @@ package io.finch.oauth2
 
 import com.twitter.finagle.http.Status
 import io.finch.Input
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class OAuth2Spec extends FlatSpec with Matchers {
+class OAuth2Spec extends AnyFlatSpec with Matchers {
   import Main._
 
   behavior of "the token-generating endpoint"
