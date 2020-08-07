@@ -7,11 +7,12 @@ import com.twitter.util.Future
 import io.finch._
 import io.finch.catsEffect._
 import org.mockito.Mockito._
-import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.prop.Checkers
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class OAuth2Spec extends FlatSpec with Matchers with Checkers with MockitoSugar {
+class OAuth2Spec extends AnyFlatSpec with Matchers with Checkers with MockitoSugar {
 
   behavior of "OAuth2"
 
